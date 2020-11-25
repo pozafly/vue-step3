@@ -32,21 +32,16 @@ export const store = new Vuex.Store({
           // 2번째 인자로는 api 호출 시 가져온 data를 담는다.
           context.commit('SET_NEWS', response.data);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => console.log(e));
     },
     FETCH_ASK(context) {
       fetchAskList()
-        .then(response => {
-          console.log(response);
-          context.commit('SET_ASK', response.data);
-        })
+        .then(({ data }) => context.commit('SET_ASK', data))
         .catch(e => console.log(e));
     },
-    FETCH_JOBS(context) {
+    FETCH_JOBS({ commit }) {
       fetchJobsList()
-        .then(response => context.commit('SET_JOBS', response.data))
+        .then(({ data }) => commit('SET_JOBS', data))
         .catch(e => console.log(e));
     }
   }
