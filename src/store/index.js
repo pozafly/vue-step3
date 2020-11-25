@@ -1,18 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { fetchNewsList } from '../api/index.js';
+import { fetchNewsList, fetchAskList, fetchJobsList } from '../api/index.js';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    news: []
+    news: [],
+    ask: [],
+    jobs: []
   },
   mutations: {
     // mutations의 첫번째 인자는 반드시 state,
     // 두번째 인자는 context.commit의 두번째 인자인 data를 알기 쉽게 이름을 바꾸어서 넣어줌.
     SET_NEWS(state, news) {
       state.news = news;
+    },
+    SET_ASK(state, ask) {
+      state.ask = ask;
+    },
+    SET_JOBS(state, jobs) {
+      state.jobs = jobs;
     }
   },
   actions: {
@@ -27,6 +35,19 @@ export const store = new Vuex.Store({
         .catch(e => {
           console.log(e);
         });
+    },
+    FETCH_ASK(context) {
+      fetchAskList()
+        .then(response => {
+          console.log(response);
+          context.commit('SET_ASK', response.data);
+        })
+        .catch(e => console.log(e));
+    },
+    FETCH_JOBS(context) {
+      fetchJobsList()
+        .then(response => context.commit('SET_JOBS', response.data))
+        .catch(e => console.log(e));
     }
   }
 });
