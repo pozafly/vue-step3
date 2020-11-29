@@ -22,8 +22,13 @@ function fetchList(pageName) {
   return axios.get(`${config.baseUrl}${pageName}/1.json`);
 }
 
-function fetchUserInfo(userName) {
-  return axios.get(`${config.baseUrl}user/${userName}.json`)
+async function fetchUserInfo(userName) {
+  try {
+    const response = await axios.get(`${config.baseUrl}user/${userName}.json`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function fetchItemInfo(item) {
