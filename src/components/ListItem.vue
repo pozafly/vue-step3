@@ -1,18 +1,20 @@
 <template>
   <div>
     <ul class="news-list">
-      <li v-for="item in news" :key="item.title" class="post">
+      <li v-for="item in ListItems" :key="item.id" class="post">
         <!-- 포인트 영역 -->
         <div class="points">
-          {{ item.points }}
+          {{ item.points || 0 }}
         </div>
         <!-- 기타 정보 영역 -->
         <div>
           <p class="news-title">
-            <a :href="item.url">{{ item.title }}</a>
+            <a :href="item.url">
+              {{ item.title }}
+            </a>
           </p>
           <small class="link-text">
-            by 
+            {{ item.time_ago }} by
             <router-link :to="`/user/${item.user}`" class="link-text">
               {{ item.user }}
             </router-link>
@@ -24,14 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
-  computed: {
-    ...mapGetters({
-      news: 'fetchedNews'
-    })
-  },
   created() {
     const name = this.$route.name;
     if (name === 'news') {
@@ -40,6 +35,19 @@ export default {
       this.$store.dispatch('FETCH_ASK');
     } else if (name === 'jobs') {
       this.$store.dispatch('FETCH_JOBS');
+    }
+  },
+  computed: {
+    ListItems() {
+      const name = this.$route.name;
+      if (name === 'news') {
+        return this.$store.state.news;
+      } else if (name === 'ask') {
+        return this.$store.state.ask;
+      } else if (name === 'jobs') {
+        return this.$store.state.jobs;
+      }
+      return null;
     }
   }
 }
