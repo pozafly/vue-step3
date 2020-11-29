@@ -2,8 +2,9 @@ import {
   fetchNewsList, 
   fetchAskList, 
   fetchJobsList, 
+  fetchList,
   fetchUserInfo,
-  fetchItemInfo
+  fetchItemInfo,
 } from '../api/index.js';
 
 export default {
@@ -33,6 +34,11 @@ export default {
   FETCH_ITEM({ commit }, item) {
     fetchItemInfo(item)
       .then(({ data }) => commit('SET_ITEM', data))
+      .catch(e => console.log(e));
+  },
+  FETCH_LIST({ commit }, pageName) {
+    fetchList(pageName)
+      .then(({ data }) => commit('SET_LIST', data))
       .catch(e => console.log(e));
   }
 }
