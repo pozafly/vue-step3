@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-for="item in news" :key="item.user">
+    <p v-for="item in news" :key="item.title">
       <a :href="item.url">{{ item.title }}</a>
       <small>
         {{ item.time_ago }} by 
