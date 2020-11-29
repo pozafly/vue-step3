@@ -24,6 +24,7 @@ export default {
     context.commit('SET_NEWS', response.data);
     return response;
   },
+  // store단 오류처리
   async FETCH_ASK(context) {
     try {
       const response = await fetchAskList();
@@ -33,21 +34,25 @@ export default {
       console.log(error);
     }
   },
+  // 비구조화 적용 async
   async FETCH_JOBS({ commit }) {
     const response = await fetchJobsList();
     commit('SET_JOBS', response.data);
     return response;
   },
+  // api단 오류처리
   async FETCH_USER({ commit }, name) {
     const response = await fetchUserInfo(name);
     commit('SET_USER', response.data);
     return response;
   },
+  // Promise 기반 동기처리
   FETCH_ITEM({ commit }, item) {
     return fetchItemInfo(item)
       .then(({ data }) => commit('SET_ITEM', data))
       .catch(e => console.log(e));
   },
+  // async 기반 동기처리
   async FETCH_LIST(context, pageName) {
     const response = await fetchList(pageName);
     context.commit('SET_LIST', response.data);
