@@ -33,7 +33,14 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch('FETCH_NEWS');
+    const name = this.$route.name;
+    if (name === 'news') {
+      this.$store.dispatch('FETCH_NEWS');
+    } else if (name === 'ask') {
+      this.$store.dispatch('FETCH_ASK');
+    } else if (name === 'jobs') {
+      this.$store.dispatch('FETCH_JOBS');
+    }
   }
 }
 </script>
